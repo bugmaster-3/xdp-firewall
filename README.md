@@ -60,7 +60,7 @@ sudo pacman -S clang llvm libbpf linux-headers
 ## Build
 
 ```bash
-git clone https://github.com/yourusername/xdp-firewall
+git clone https://github.com/bugmaster-3/xdp-firewall
 cd xdp-firewall
 make
 ```
