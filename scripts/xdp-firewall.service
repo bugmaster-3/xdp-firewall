@@ -1,0 +1,30 @@
+[Unit]
+Description=XDP Firewall — NIC-level packet filtering via eBPF/XDP
+Documentation=https://github.com/yourusername/xdp-firewall
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/xdp-firewall \
+    -i %i \
+    -o /usr/local/lib/xdp-firewall/xdp_firewall.o \
+    -c /etc/xdp-firewall/rules.conf
+
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/bin/kill -TERM $MAINPID
+
+Restart=on-failure
+RestartSec=5s
+
+# Security hardening
+NoNewPrivileges=no
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_SYS_ADMIN CAP_BPF
+AmbientCapabilities=CAP_NET_ADMIN CAP_SYS_ADMIN CAP_BPF
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/sys/fs/bpf
+
+[Install]
+WantedBy=multi-user.target

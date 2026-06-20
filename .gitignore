@@ -1,0 +1,11 @@
+build/
+*.o
+*.d
+*.ll
+*.s
+include/xdp_firewall.skel.h
+*.swp
+*.swo
+.DS_Store
+__pycache__/
+*.pyc

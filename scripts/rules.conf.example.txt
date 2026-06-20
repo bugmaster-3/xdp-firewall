@@ -1,0 +1,31 @@
+# xdp-firewall rules configuration
+# ───────────────────────────────
+# Directives:
+#   block_ip   <ipv4>     Block a source IPv4 address
+#   block_port <port>     Block a destination TCP/UDP port
+#   whitelist  <ipv4>     Always allow this source IP (overrides blocklist)
+#
+# Lines starting with # are comments.
+# Inline comments are supported after a #.
+
+# ── Whitelist trusted IPs first ──────────────────────────────────────────────
+
+whitelist  127.0.0.1          # loopback always allowed
+whitelist  10.0.0.1           # internal gateway
+
+# ── Known malicious IPs ───────────────────────────────────────────────────────
+
+block_ip   198.51.100.1       # known scanner
+block_ip   203.0.113.45       # abuse report 2024-01-15
+block_ip   192.0.2.200        # Tor exit node
+
+# ── Port blocklist ────────────────────────────────────────────────────────────
+
+block_port 23                 # Telnet — no excuse
+block_port 135                # MS RPC
+block_port 137                # NetBIOS Name Service
+block_port 138                # NetBIOS Datagram
+block_port 139                # NetBIOS Session
+block_port 445                # SMB — block externally
+block_port 3389               # RDP — change default or block
+block_port 5900               # VNC
